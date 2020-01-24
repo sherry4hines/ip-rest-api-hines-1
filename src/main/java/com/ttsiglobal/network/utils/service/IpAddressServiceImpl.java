@@ -32,9 +32,7 @@ public class IpAddressServiceImpl implements IpAddressService {
     @Transactional( readOnly = true)
     public List<IpAddress> listAllIpAddresses() {
         List<IpAddress> results = new ArrayList<>();
-        for (IpAddress addr : repo.findAll()) {
-            results.add(addr);
-        }
+        results.addAll(repo.findAll());
         return results;
     }
 
