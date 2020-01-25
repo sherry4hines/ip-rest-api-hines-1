@@ -25,8 +25,11 @@ import java.util.List;
 public class IpAddressServiceImpl implements IpAddressService {
     private final Logger LOG = LoggerFactory.getLogger("IpAddressServiceImpl");
 
-    @Autowired
-    private IpAddressRepo repo;
+    private final IpAddressRepo repo;
+
+    public IpAddressServiceImpl(IpAddressRepo repo) {
+        this.repo = repo;
+    }
 
     @Override
     @Transactional( readOnly = true)
@@ -90,9 +93,6 @@ public class IpAddressServiceImpl implements IpAddressService {
     @Override
     public boolean isAcquiredIpAddress(String ipaddr) {
         IpAddress addr = repo.findByIpAddress(ipaddr);
-        if (addr == null || !addr.getAddressStatus().equals(IpAddress.IpAddressStatus.ACQUIRED)) {
-            return false;
-        }
-        return true;
+        return addr != null && addr.getAddressStatus().equals(IpAddress.IpAddressStatus.ACQUIRED);
     }
 }

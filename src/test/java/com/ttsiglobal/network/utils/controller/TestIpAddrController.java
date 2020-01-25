@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class TestIpAddrController extends AbstractTest{
     private int reccnt ;
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
     private String insStr;
 
     @Override
@@ -55,7 +55,7 @@ public class TestIpAddrController extends AbstractTest{
         assertEquals(200, status);
         String content = mvcResult.getResponse().getContentAsString();
         IpAddress[] alist = super.mapFromJson(content, IpAddress[].class);
-        assertTrue(alist.length == 4);
+        assertTrue(alist.length == reccnt);
     }
 
     // Test AcquireIPAddress

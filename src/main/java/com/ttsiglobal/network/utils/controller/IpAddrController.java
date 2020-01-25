@@ -16,11 +16,14 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/ip-addresses")
-@Api(value="IP Address Management System", description="Operations pertaining to maintaining list of assignable IP addresses")
+@Api(value="IP Address Management System", tags={"Operations pertaining to maintaining list of assignable IP addresses"})
 public class IpAddrController {
 
-    @Autowired
-    private IpAddressService service;
+    private final IpAddressService service;
+
+    public IpAddrController(IpAddressService service) {
+        this.service = service;
+    }
 
     /**
      * Retrieve a list of all assignable ip addresses
