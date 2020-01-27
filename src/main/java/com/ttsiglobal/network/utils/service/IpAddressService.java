@@ -11,8 +11,8 @@ import java.util.List;
 public interface IpAddressService {
     List<IpAddress> listAllIpAddresses();
     int CreateIpAddresses(CreateRequest request);
-    String AcquireIpAddress();
-    String ReleaseIpAddress(String ipAddress);
+    IpAddress AcquireIpAddress();
+    IpAddress ReleaseIpAddress(CreateRequest request);
     boolean isValidCreateRequest(CreateRequest request);
     boolean isAcquiredIpAddress(String ipaddr);
 }

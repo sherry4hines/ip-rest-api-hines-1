@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/ip-addresses")
 @Api(value="IP Address Management System", tags={"Operations pertaining to maintaining list of assignable IP addresses"})
 public class IpAddrController {
@@ -45,8 +45,8 @@ public class IpAddrController {
      * @return
      */
     @GetMapping("acquire")
-    @ApiOperation(value = "Acquire an available IP address and mark it ACQUIRED", response = List.class)
-    public String acquireIpAddress() {
+    @ApiOperation(value = "Acquire an available IP address and mark it ACQUIRED", response = String.class)
+    public IpAddress acquireIpAddress() {
         return service.AcquireIpAddress();
     }
 
@@ -56,13 +56,13 @@ public class IpAddrController {
      * @return
      */
     @PostMapping("release")
-    @ApiOperation(value = "Release an acquired IP address and mark it AVAILABLE", response = List.class)
-    public String releaseIpAddress(
+    @ApiOperation(value = "Release an acquired IP address and mark it AVAILABLE", response = String.class)
+    public IpAddress releaseIpAddress(
             @RequestBody CreateRequest request ) throws InvalidRequestException {
         if (!service.isAcquiredIpAddress(request.getCidr())) {
             throw new InvalidRequestException("Invalid IP address specified or address specified is not acquired...");
         }
-        return service.ReleaseIpAddress(request.getCidr());
+        return service.ReleaseIpAddress(request);
     }
 
     /**

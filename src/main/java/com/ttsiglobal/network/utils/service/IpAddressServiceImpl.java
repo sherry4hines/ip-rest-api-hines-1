@@ -55,22 +55,22 @@ public class IpAddressServiceImpl implements IpAddressService {
 
     @Override
     @Transactional
-    public String AcquireIpAddress() {
+    public IpAddress AcquireIpAddress() {
         Sort sort = Sort.by(Sort.Direction.DESC, "ipAddress");
         Page<IpAddress> addrPage = repo.findAvailableIpAddress( PageRequest.of(0, 1, sort), IpAddress.IpAddressStatus.AVAILABLE);
         IpAddress addr = addrPage.getContent().get(0);
         addr.setAddressStatus(IpAddress.IpAddressStatus.ACQUIRED);
         repo.save(addr);
-        return addr.getIpAddress();
+        return addr;
     }
 
     @Override
     @Transactional
-    public String ReleaseIpAddress(String ipAddress) {
-        IpAddress addr = repo.findByIpAddress(ipAddress);
+    public IpAddress ReleaseIpAddress(CreateRequest req) {
+        IpAddress addr = repo.findByIpAddress(req.getCidr());
         addr.setAddressStatus(IpAddress.IpAddressStatus.AVAILABLE);
         repo.save(addr);
-        return "OK";
+        return addr;
     }
 
     @Override
@@ -93,6 +93,6 @@ public class IpAddressServiceImpl implements IpAddressService {
     @Override
     public boolean isAcquiredIpAddress(String ipaddr) {
         IpAddress addr = repo.findByIpAddress(ipaddr);
-        return addr != null && addr.getAddressStatus().equals(IpAddress.IpAddressStatus.ACQUIRED);
+        return (addr != null && addr.getAddressStatus().equals(IpAddress.IpAddressStatus.ACQUIRED));
     }
 }

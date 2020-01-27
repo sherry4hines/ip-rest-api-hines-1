@@ -25,10 +25,11 @@ public interface IpAddressRepo  extends JpaRepository<IpAddress, String> {
 
     /**
      * Used to find a specific IP address to change or view its status
-     * @param ipAddress
+     * @param ipaddr
      * @return
      */
-    IpAddress findByIpAddress(String ipAddress);
+    @Query("select i from IpAddress i where i.ipAddress = :ipaddr ")
+    IpAddress findByIpAddress(String ipaddr);
 
     /**
      * Used to identify overlapping entries in ip address table on new create request

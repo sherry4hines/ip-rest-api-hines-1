@@ -1,0 +1,27 @@
+<div class="container">
+
+  <h3>Create Block of IP Addresses</h3>
+
+  <div class="form-group">
+    <label for="name">CIDR</label>
+    <input type="text" class="form-control" id="name" [(ngModel)]="request.cidr" placeholder="Enter CIDR notation">
+  </div>
+  <div class="form-group">
+    <mat-checkbox  id="inclFirst" [(ngModel)]="request.inclFirst" >Include network/broadcast addresses?</mat-checkbox>
+  </div>
+  <table width="100%">
+    <tr class="row">
+      <td class="col-6">
+        <button type="submit" class="btn btn-primary btn-sm" (click)="createIpAddresses()">Add CIDR Block</button>
+      </td>
+      <td class="col-6">
+        <button class="btn btn-warning btn-sm" [routerLink]="['/app-ip-address-list']">Back to List</button>
+      </td>
+    </tr>
+  </table>
+  <hr/>
+  <div class="form-group">
+    <label for="counter">IP Addresses created</label>
+    <input type="text" class="form-control" id="counter" [(ngModel)]="counter" >
+  </div>
+</div>
